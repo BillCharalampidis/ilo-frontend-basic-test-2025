@@ -8,8 +8,6 @@ async function getPosts() {
     posts.slice(0, 10).forEach(post => {
     const postDiv = document.createElement('div');
     postDiv.textContent = post.title;
-    postDiv.style.cursor = 'pointer';
-    postDiv.style.marginBottom = '10px';
     postDiv.addEventListener('click', () => showDetails(post.id));
     postsDiv.appendChild(postDiv);
 });
