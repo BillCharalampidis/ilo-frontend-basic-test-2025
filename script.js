@@ -1,11 +1,19 @@
-// script.js
-
-// Συνάρτηση για fetch των posts και εμφάνιση λίστας
 async function getPosts() {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts');
     const posts = await response.json();
-    // TODO: Εμφανίστε τα πρώτα 10 posts στο #posts div
+    const postsDiv = document.getElementById('posts');
+    postsDiv.innerHTML = '';
+
+    posts.slice(0, 10).forEach(post => {
+    const postDiv = document.createElement('div');
+    postDiv.textContent = post.title;
+    postDiv.style.cursor = 'pointer';
+    postDiv.style.marginBottom = '10px';
+    postDiv.addEventListener('click', () => showDetails(post.id));
+    postsDiv.appendChild(postDiv);
+});
+
   } catch (error) {
     document.getElementById('posts').innerText = 'Σφάλμα φόρτωσης δεδομένων';
   }
@@ -20,7 +28,15 @@ async function showDetails(id) {
     const post = await postRes.json();
     const commentsRes = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`);
     const comments = await commentsRes.json();
-    // TODO: Εμφανίστε τα post details και τα comments στο detailsDiv
+    detailsDiv.innerHTML = `
+    <h2>${post.title}</h2>
+    <p>${post.body}</p>
+    <h3>Σχόλια:</h3>
+    <ul>
+    ${comments.map(comment => `<li><strong>${comment.name}</strong>: ${comment.body}</li>`).join('')}
+  </ul>
+`;
+
   } catch (error) {
     detailsDiv.innerText = 'Σφάλμα φόρτωσης λεπτομερειών';
   }
