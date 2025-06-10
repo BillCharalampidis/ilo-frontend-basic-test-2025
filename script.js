@@ -17,7 +17,7 @@ async function getPosts() {
   }
 }
 
-// Συνάρτηση για εμφάνιση λεπτομερειών και σχολίων για ένα post
+
 async function showDetails(id) {
   const detailsDiv = document.getElementById('details');
   detailsDiv.innerHTML = '';
